@@ -44,11 +44,20 @@ const resolvers = {
         }
       }
       if (updateIndex == -1) {
-        return `Link not found for id:${args.id}`;
+        return `Link not found for id: ${args.id}`;
       }
       links[updateIndex].url = args.url;
       links[updateIndex].description = args.description;
       return links[updateIndex];
+    },
+    deleteLink: (_: any, args: { id: string }): Link | String => {
+      let deleteIndex = -1;
+      for (let i = 0; i < links.length; i++) {
+        if (links[i].id == args.id) {
+          return links.splice(i, 1)[0];
+        }
+      }
+      return `Link not found for id: ${args.id}`;
     },
   },
 };
