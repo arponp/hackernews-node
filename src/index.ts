@@ -22,12 +22,15 @@ const resolvers = {
     feed: () => links,
   },
   Mutation: {
-    post: (args: { url: string; description: string }) => {
+    post: (_: any, args: { url: string; description: string }): Link => {
+      let idCount = links.length;
       const link: Link = {
-        id: 'hello',
+        id: `link-${idCount++}`,
         url: args.url,
         description: args.description,
       };
+      links.push(link);
+      return link;
     },
   },
   Link: {
