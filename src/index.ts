@@ -32,6 +32,24 @@ const resolvers = {
       links.push(link);
       return link;
     },
+    updateLink: (
+      _: any,
+      args: { id: string; url: string; description: string }
+    ): Link | string => {
+      let updateIndex = -1;
+      for (let i = 0; i < links.length; i++) {
+        if (links[i].id == args.id) {
+          updateIndex = i;
+          break;
+        }
+      }
+      if (updateIndex == -1) {
+        return `Link not found for id:${args.id}`;
+      }
+      links[updateIndex].url = args.url;
+      links[updateIndex].description = args.description;
+      return links[updateIndex];
+    },
   },
 };
 
