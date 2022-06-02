@@ -33,11 +33,6 @@ const resolvers = {
       return link;
     },
   },
-  Link: {
-    id: (parent: { id: string }) => parent.id,
-    description: (parent: { description: string }) => parent.description,
-    url: (parent: { url: string }) => parent.url,
-  },
 };
 
 const server = new ApolloServer({
