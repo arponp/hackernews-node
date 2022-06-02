@@ -2,7 +2,13 @@ import { ApolloServer } from 'apollo-server';
 
 const typeDefs = `
     type Query {
-        info: String!
+      info: String!
+      feed: [Link!]!
+    }
+    type Link {
+      id: ID!
+      description: String!
+      url: String!
     }
 `;
 
