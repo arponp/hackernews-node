@@ -1,22 +1,12 @@
 import { ApolloServer } from 'apollo-server';
+import fs from 'fs';
+import path from 'path';
 
 interface Link {
   id: string;
   url: string;
   description: string;
 }
-
-const typeDefs = `
-    type Query {
-      info: String!
-      feed: [Link!]!
-    }
-    type Link {
-      id: ID!
-      description: String!
-      url: String!
-    }
-`;
 
 const links: Link[] = [
   {
@@ -31,15 +21,24 @@ const resolvers = {
     info: () => `This is the API of a Hackernews Clone`,
     feed: () => links,
   },
+  Mutation: {
+    post: (args: { url: string; description: string }) => {
+      const link: Link = {
+        id: 'hello',
+        url: args.url,
+        description: args.description,
+      };
+    },
+  },
   Link: {
-    id: (parent: any) => parent.id,
-    description: (parent: any) => parent.description,
-    url: (parent: any) => parent.url,
+    id: (parent: { id: string }) => parent.id,
+    description: (parent: { description: string }) => parent.description,
+    url: (parent: { url: string }) => parent.url,
   },
 };
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf-8'),
   resolvers,
 });
 
